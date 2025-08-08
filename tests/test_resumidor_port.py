@@ -1,5 +1,6 @@
 from app.ports.resumidor_port import ResumidorPort
 
+
 class FakeAdapter(ResumidorPort):
     def resumir(self, texto: str) -> str:
         return "Resumen de prueba"
