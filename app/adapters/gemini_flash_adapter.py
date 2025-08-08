@@ -1,8 +1,8 @@
-import os
-from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
+from langchain_google_genai import ChatGoogleGenerativeAI
+
 from app.ports.resumidor_port import ResumidorPort
+from app.utilities.google_services import get_secrets_values
 
 
 class GeminiFlashAdapter(ResumidorPort):
@@ -11,10 +11,7 @@ class GeminiFlashAdapter(ResumidorPort):
     """
 
     def __init__(self):
-        load_dotenv()
-        if "GOOGLE_API_KEY" not in os.environ:
-            raise ValueError("GOOGLE_API_KEY is not set in environment variables.")
-        self.api_key = os.environ["GOOGLE_API_KEY"]
+        self.api_key = get_secrets_values("secrets_ai_summarizer", debug=False)["google_api_key"]
 
     def resumir(self, texto: str) -> str:
         """

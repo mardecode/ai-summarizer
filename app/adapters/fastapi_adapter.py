@@ -1,9 +1,9 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from app.domain.resumen_service import servicio_resumen
+
 from app.adapters.gemini_flash_adapter import GeminiFlashAdapter
 from app.adapters.gemini_pro_adapter import GeminiProAdapter
-from fastapi import HTTPException
+from app.domain.resumen_service import servicio_resumen
 
 app = FastAPI(title="API de Resumen de Texto")
 

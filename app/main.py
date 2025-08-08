@@ -1,5 +1,6 @@
 # main.py
 import uvicorn
+
 from app.adapters.fastapi_adapter import app
 
 if __name__ == "__main__":
