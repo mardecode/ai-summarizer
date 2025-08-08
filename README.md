@@ -1,2 +1,0 @@
-# ai-summarizer
-ai-summarizer
