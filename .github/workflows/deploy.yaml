@@ -1,0 +1,60 @@
+name: CI for pushing Develop branch image to GCP
+
+on:
+    push:
+        branches:
+            - main
+
+env:
+    GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    HOST_DOCKER: ${{ vars.HOST_DOCKER }}
+    REPOSITORY_NAME_DOCKER: ${{ vars.REPOSITORY_NAME_DOCKER }}
+    IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+    TAG_IMAGE:  ${{ vars.TAG_IMAGE }}
+jobs:
+    Build_and_push_image_to_GCP:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: 'Authenticate with Google Cloud'
+              uses: 'google-github-actions/auth@v2'
+              with:
+                credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+            - name: 'Set up Cloud SDK'
+              uses: 'google-github-actions/setup-gcloud@v2'
+
+            - name: Build Docker image
+              run: |
+                gcloud auth configure-docker $HOST_DOCKER
+                docker build -t $HOST_DOCKER/$GCP_PROJECT_ID/$REPOSITORY_NAME_DOCKER/$IMAGE_NAME:$TAG_IMAGE .
+
+            - name: Push Docker image
+              run: |
+                docker push $HOST_DOCKER/$GCP_PROJECT_ID/$REPOSITORY_NAME_DOCKER/$IMAGE_NAME:$TAG_IMAGE
+
+    Update_cloud_run_Service:
+        needs: Build_and_push_image_to_GCP
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: 'Authenticate with Google Cloud'
+              uses: 'google-github-actions/auth@v2'
+              with:
+                credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+            - name: 'Set up Cloud SDK'
+              uses: 'google-github-actions/setup-gcloud@v2'
+
+            - name: Update Cloud Run Service
+              run: |
+                gcloud run services update \
+                de-transfer-service-aws-gcp \
+                --platform=managed \
+                --image=$HOST_DOCKER/$GCP_PROJECT_ID/$REPOSITORY_NAME_DOCKER/$IMAGE_NAME:$TAG_IMAGE \
+                --region=us-central1 \
+                --quiet
