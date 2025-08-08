@@ -1,4 +1,3 @@
-from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from app.adapters.fastapi_adapter import app
 

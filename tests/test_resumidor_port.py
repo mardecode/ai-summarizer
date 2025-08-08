@@ -1,4 +1,3 @@
-import pytest
 from app.ports.resumidor_port import ResumidorPort
 
 class FakeAdapter(ResumidorPort):
