@@ -1,3 +1,4 @@
+
 # AI Summarizer
 
 API to summarize any text with Gemini using hexagonal architecture.
