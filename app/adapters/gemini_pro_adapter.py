@@ -1,9 +1,12 @@
+import os
+
 from langchain.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.ports.resumidor_port import ResumidorPort
 from app.utilities.google_services import get_secrets_values
 
+DEBUG = os.getenv("DEBUG", True)
 
 class GeminiProAdapter(ResumidorPort):
     """
@@ -11,7 +14,7 @@ class GeminiProAdapter(ResumidorPort):
     """
 
     def __init__(self):
-        self.api_key = get_secrets_values("secrets_ai_summarizer", debug=False)["google_api_key"]
+        self.api_key = get_secrets_values("secrets_ai_summarizer", debug=DEBUG)["google_api_key"]
 
     def resumir(self, texto: str) -> str:
         """
