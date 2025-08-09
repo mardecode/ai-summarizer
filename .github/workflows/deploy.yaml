@@ -53,7 +53,7 @@ jobs:
             - name: Update Cloud Run Service
               run: |
                 gcloud run services update \
-                de-transfer-service-aws-gcp \
+                $IMAGE_NAME \
                 --platform=managed \
                 --image=$HOST_DOCKER/$GCP_PROJECT_ID/$REPOSITORY_NAME_DOCKER/$IMAGE_NAME:$TAG_IMAGE \
                 --region=us-central1 \
