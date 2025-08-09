@@ -6,7 +6,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from app.ports.resumidor_port import ResumidorPort
 from app.utilities.google_services import get_secrets_values
 
-DEBUG = os.getenv("DEBUG", True)
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
 class GeminiProAdapter(ResumidorPort):
     """

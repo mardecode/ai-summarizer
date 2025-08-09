@@ -44,6 +44,7 @@ https://tottus-prod-373816134831.us-central1.run.app/docs
 * When occurs an error the API return 400 or 500 error code.
 * Has CI/CD for check the linter and to deploy to GCP cloud run service when the push is to main.
 * The image docker is saved in Artifact registry
+* Remenber not to send text with Newline (\n), that's not valid
 
 ![alt text](images/image-4.png)
 
