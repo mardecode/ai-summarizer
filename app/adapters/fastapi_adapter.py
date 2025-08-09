@@ -31,7 +31,8 @@ def resumir_gemini_flash(entrada: TextoEntrada):
         return {"resumen": resumen}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-    except Exception:
+    except Exception as e:
+        print(f"Error during summarization: {str(e)}")
         raise HTTPException(status_code=500, detail="Ocurrió un error interno")
 
 

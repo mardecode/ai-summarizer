@@ -18,4 +18,5 @@ def servicio_resumen(input_text: str, adapter: ResumidorPort) -> str:
         resumen = adapter.resumir(input_text)
         return resumen
     except Exception as e:
+        print(f"Error during summarization: {str(e)}")
         raise RuntimeError(f"Error during summarization: {str(e)}")

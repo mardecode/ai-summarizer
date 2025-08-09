@@ -7,7 +7,7 @@ from app.utilities.google_services import get_secrets_values
 
 class GeminiFlashAdapter(ResumidorPort):
     """
-    Adapter that implements ResumidorPort using Google's Gemini Flash 1.5 model.
+    Adapter that implements ResumidorPort using Google's Gemini Flash 2.5 model.
     """
 
     def __init__(self):
@@ -22,7 +22,7 @@ class GeminiFlashAdapter(ResumidorPort):
             str: The summarized text.
         """
         llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash", google_api_key=self.api_key, temperature=0.3
+            model="gemini-2.5-flash", google_api_key=self.api_key, temperature=0.3
         )
 
         prompt = PromptTemplate(
